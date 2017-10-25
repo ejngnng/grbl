@@ -6,7 +6,7 @@
 
 ***
 
-Grbl is a no-compromise, high performance, low cost alternative to parallel-port-based motion control for CNC milling. It will run on a vanilla Arduino (Duemillanove/Uno) as long as it sports an Atmega 328. 
+Grbl is a no-compromise, high performance, low cost alternative to parallel-port-based motion control for CNC milling. It will run on a vanilla Arduino (Duemillanove/Uno) as long as it sports an Atmega 328.
 
 The controller is written in highly optimized C utilizing every clever feature of the AVR-chips to achieve precise timing and asynchronous operation. It is able to maintain up to 30kHz of stable, jitter free control pulses.
 
@@ -31,14 +31,14 @@ Grbl includes full acceleration management with look ahead. That means the contr
 
 _**Master Branch:**_
 * [Grbl v0.9j Atmega328p 16mhz 115200baud with generic defaults](http://bit.ly/1I8Ey4S) _(2016-03-17)_
-  - **IMPORTANT INFO WHEN UPGRADING TO GRBL v0.9 :** 
-  - Baudrate is now **115200** (Up from 9600). 
+  - **IMPORTANT INFO WHEN UPGRADING TO GRBL v0.9 :**
+  - Baudrate is now **115200** (Up from 9600).
   - Homing cycle updated. Located based on switch trigger, rather than release point.
   - Variable spindle is now enabled by default. Z-limit(D12) and spindle enable(D11) have switched to access the hardware PWM on D11. Homing will not work if you do not re-wire your Z-limit switch to D12.
 
 _**Archives:**_
-* [Grbl v0.9i Atmega328p 16mhz 115200baud with generic defaults](http://bit.ly/1EiviDk) 
-* [Grbl v0.9g Atmega328p 16mhz 115200baud with generic defaults](http://bit.ly/1m8E1Qa) 
+* [Grbl v0.9i Atmega328p 16mhz 115200baud with generic defaults](http://bit.ly/1EiviDk)
+* [Grbl v0.9g Atmega328p 16mhz 115200baud with generic defaults](http://bit.ly/1m8E1Qa)
 * [Grbl v0.8c Atmega328p 16mhz 9600baud](http://bit.ly/SSdCJE)
 * [Grbl v0.7d Atmega328p 16mhz 9600baud](http://bit.ly/ZhL15G)
 * [Grbl v0.6b Atmega328p 16mhz 9600baud](http://bit.ly/VD04A5)
@@ -53,12 +53,12 @@ _**Archives:**_
   - **Restore EEPROM feature:** A new set of restore EEPROM features to help OEMs and users reset their Grbl installation to the build defaults. See Configuring Grbl Wiki for details.
   - **More configuration options for input pins**
   - **Bug fixes including:** Soft limit error handling, disable spindle when S0, g-code reporting of G38.x.
-  
+
 ## Update Summary for v0.9i
   - **IMPORTANT:**
     - **Homing cycle updated. Locates based on trigger point, rather than release point.**
     - **System tweaks: $14 cycle auto-start has been removed. No more QUEUE state.**
-  - **New G-Codes** 
+  - **New G-Codes**
   - **CoreXY Support**
   - **Safety Door Support**
   - **Full Limit and Control Pin Configurability**
@@ -87,7 +87,7 @@ _**Archives:**_
   - **Additional Compile-Time Feature Options**
 
 -
-``` 
+```
 List of Supported G-Codes in Grbl v0.9 Master:
   - Non-Modal Commands: G4, G10L2, G10L20, G28, G30, G28.1, G30.1, G53, G92, G92.1
   - Motion Modes: G0, G1, G2, G3, G38.2, G38.3, G38.4, G38.5, G80
@@ -110,3 +110,28 @@ List of Supported G-Codes in Grbl v0.9 Master:
 Grbl is an open-source project and fueled by the free-time of our intrepid administrators and altruistic users. If you'd like to donate, all proceeds will be used to help fund supporting hardware and testing equipment. Thank you!
 
 [![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=CUGXJHXA36BYW)
+
+# build with ubuntu
+
+## prepare
+
+```
+sudo apt-get update
+sudo apt-get install avr-libc avrdude avrdude-doc gcc-avr gdb-avr -y
+
+```
+
+## build
+
+```
+cd ~/grbl/
+make grbl.hex
+
+```
+
+## upload
+
+```
+avrdude -p m328p -c arduino -b 115200 -P /dev/ttyUSB0 -e -U flash:w:grbl.hex
+
+```
